@@ -1,5 +1,18 @@
-# Huami Take-home Assignment
-### *Sahand Khakabimamaghani*
+# Adverserial Architecture for Source-agnostic Learning
+
+This repository contains implementation of a modified version of the method proposed at (the following paper)[http://sleep.csail.mit.edu/files/rfsleep-paper.pdf]:
+
+Learning Sleep Stages from Radio Signals: A Conditional Adversarial Architecture
+Mingmin Zhao, Shichao Yue, Dina Katabi, Tommi Jaakkola, Matt Bianchi
+International Conference on Machine Learning (ICML’17)
+
+Briefly, the paper introduces a model for predicting sleep state (i.e. awake, light sleep, deep sleep, and rapid eye movement) based on the radio frequencies (RFs) that ones body reflects during the sleep. RFs are emitted in the room by a device and data is gathered using sensors that measure the RFs that ones body reflects during the sleep. An AI model then interprets these sensor data and predicts the state of the sleep.
+
+The challenge is that the RFs are highly dependent on the measurment environment (e.g. room) and the sleeping individual. This, then, becomes a multi-domain adaptation probem where each domain consists of the environment and the individual and has a different data distribution. Therefore, the domain-specific extraneous data should be ignored in the input to be able to make robust predictions. This is performed using an adverserial architecutre. Please see the paper for more details.
+
+## My Implementation
+
+Similar to the original architecture proposed in the above paper, the architecture implemented in this repository consists of three components: **cncoder**, **predictor**, and **discriminator**. The main difference between this implementation and the original one is in the encoder compnenet, where the original paper uses a CNN-RNN architecture but I use a CNN architecture. In other words, the model implemented here does not consider the past data when predicting the sleep state at a given time point. Another difference is that a smaller CNN model is used here compared to the original paper, which uses a ResNet with 24 convolutional layers. These changes are made due to lack of data to train large models.
 
 Points I would like to mention about my submission are as follows:
 - All functions for building and training the classification model are encapsulated in the class **GAN** in the *model.py* file. The data processing and hyperparameter search codes are in the *main.py* file.
