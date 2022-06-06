@@ -14,7 +14,7 @@ The challenge is that the RFs are highly dependent on the measurment environment
 
 Similar to the original architecture proposed in the above paper, the architecture implemented in this repository consists of three components: **cncoder**, **predictor**, and **discriminator**. The main difference between this implementation and the original one is in the encoder compnenet, where the original paper uses a CNN-RNN architecture but I use a CNN architecture. In other words, the model implemented here does not consider the past data when predicting the sleep state at a given time point. Another difference is that a smaller CNN model is used here compared to the original paper, which uses a ResNet with 24 convolutional layers. These changes are made due to lack of data to train large models.
 
-Points I would like to mention about my submission are as follows:
+A few points about the implementation:
 - All functions for building and training the classification model are encapsulated in the class **GAN** in the *model.py* file. The data processing and hyperparameter search codes are in the *main.py* file.
 - As in the provided paper, i.e. *"Learning Sleep Stages from Radio Signals: A Conditional Adversarial Architecture"*, I have implemented three components using different functions **Encoder**, **Predictor**, and **Discriminator** using *Tensorflow*. This compartmentalization is useful for learning as described later. The function **FullModel** puts the components together as shown in figure 1(b) in the paper.
 - To implement the learning algorithm (Algorithm 1 in the paper), which consisted of three consequitive steps for learning different components, I used Tensorflow **GradientTape** and a custom loss function (equation (3) in the paper). When updating a particular component's weights in each iteration (a batch), other components are freezed using the components' *trainable* attributes.
@@ -27,5 +27,3 @@ Points I would like to mention about my submission are as follows:
   + Adam optimizier with exponential learning rate decay
   + Tracking the iteration performance based on the train and validation/dev accuracy measured by the loss value and AUC, and selecting the model with the largest validation AUC as the best model
   + A **Save** function that stores all the performance logs (*iter_perf.csv*), the best performace (*best_perf.csv*), hyperparameters ('hyperparameters.csv'), and the best model all in the model folder
-
-Thank you!
